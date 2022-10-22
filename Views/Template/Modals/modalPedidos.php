@@ -1,4 +1,9 @@
 <!-- Modal -->
+<style>
+    .form-row-compact .form-group {
+        margin-bottom: 4px;
+    }
+</style>
 <div class="modal fade" id="modalFormPaciente" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -11,8 +16,8 @@
             <div class="modal-body">
                 <form id="formPaciente" name="formPaciente" class="form-horizontal" autocomplete="off">
                     <input type="hidden" id="idUsuario" name="idUsuario" value="">
-                    <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
-                    <div class="form-row">
+                    <p class="text-primary" style="margin-bottom: 4px;">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
+                    <div class="form-row form-row-compact">
                         <div class="form-group col-md-8">
                             <label for="txtIdentificacion">Paciente<span class="required">*</span></label>
                             <input type="text" class="form-control txtPersona" id="txtPersona" placeholder="nombre, apellido o DPI" name="txtIdentificacion" required="">
@@ -40,7 +45,7 @@
                             <button id="cleanPerson" style="display: none; position: absolute; bottom: 0px;" class="btn btn-danger" type="button"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cambiar paciente</button>
                         </div>
                     </div>
-                    <div class="form-row">
+                    <div class="form-row form-row-compact">
                         <div class="form-group col-md-4">
                             <label for="selectServicio">Servicio<span class="required">*</span></label>
                             <select id="selectServicio" name="selectServicio" class="form-control form-select" aria-label="Selecciona un servicio">
@@ -57,7 +62,7 @@
                     </div>
                     <hr>
                     <!-- Tabla de insumos, permite agregar, modificar cantidades, etc -->
-                    <div class="form-row">
+                    <div class="form-row form-row-compact">
                         <div class="form-group col-md-12">
                             <label for="txtSrchInsumo">Agregar insumo<span class="required">*</span></label>
                             <input type="text" class="form-control txtSrchInsumo" id="txtSrchInsumo" placeholder="Busar insumo" name="txtSrchInsumo" required="">
