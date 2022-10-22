@@ -91,5 +91,13 @@
 			return $request;
 		}
 
+		public function  listServices()
+		{
+			$sql = "SELECT idservicio, nombreservicio FROM servicio
+					WHERE status != 0 ";
+			$request = $this->select_all($sql);
+			return $request;
+		}
+
 	}
  ?>

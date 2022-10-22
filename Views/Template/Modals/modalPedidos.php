@@ -47,10 +47,20 @@
                             </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <button id="cleanPerson" style="display: none; position: absolute; bottom: 0px;" class="btn btn-danger" type="button" ><i class="fa fa-fw fa-lg fa-times-circle"></i>Cambiar paciente</button>
+                            <button id="cleanPerson" style="display: none; position: absolute; bottom: 0px;" class="btn btn-danger" type="button"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cambiar paciente</button>
                         </div>
                     </div>
-
+                    <div class="form-row">
+                        <div class="form-group col-md-8">
+                            <label for="txtIdentificacion">Servicio<span class="required">*</span></label>
+                            <select id="selectServicio" name="selectServicio" class="form-control form-select" aria-label="Selecciona un servicio">
+                                <option selected>Selecciona un servicio</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label for="txtIdentificacion">Identificación (DPI) <span class="required">*</span></label>
