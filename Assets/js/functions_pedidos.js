@@ -28,32 +28,43 @@ $.get(base_url + "/Servicios/getServicesList", function (data) {
     }
 });
 
-$(document).on('keyup', '#txtPersona', function () {
-    let search_value = this.value.trim();
-    console.log('buscando: ', search_value);
-    if (search_value.length > 1 && !this.disabled) {
-        $('#resultsTableBody').empty();
-        $.get(base_url + "/Pacientes/searchUserByMultipleFields/" + search_value, function (data) {
-            try {
-                let results = JSON.parse(data);
-                console.log(results);
-                if (results.data && results.data.length > 0) {
-                    console.log("Recorriendo array")
-                    for (const element of results.data) {
-                        console.log("Agregando ", element);
-                        $('#resultsTableBody').append('<tr class="resultViewelement" id="perElmnt-' + element.idpersona + '"><td class="rstlvwid">' + element.identificacion + '</td><td class="rstlvwname">' + element.nombres + '</td> <td class="rstlvwlast">' + element.apellidos + '</td></tr>');
+
+
+/**
+ * Busqueda de pacientes en tiempo real, pude ser identificacion , nombre o apellido.
+ */
+$(document).on('keyup', '#txtPersona', function (e) {
+    console.log(e.key);
+    let alpha_numeric_regex = /[a-z|A-Z|0-9]+/;
+    //solo procesamos alfa numericos, lo demas puede ocacionar falsas busquedas. 
+    if (e.key.length == 1 &&  e.key.match(alpha_numeric_regex) ) {
+        let search_value = this.value.trim();
+        console.log('buscando: ', search_value);
+        if (search_value.length > 1 && !this.disabled) {
+            $('#resultsTableBody').empty();
+            $.get(base_url + "/Pacientes/searchUserByMultipleFields/" + search_value, function (data) {
+                try {
+                    let results = JSON.parse(data);
+                    console.log(results);
+                    if (results.data && results.data.length > 0) {
+                        console.log("Recorriendo array")
+                        for (const element of results.data) {
+                            console.log("Agregando ", element);
+                            $('#resultsTableBody').append('<tr class="resultViewelement" id="perElmnt-' + element.idpersona + '"><td class="rstlvwid">' + element.identificacion + '</td><td class="rstlvwname">' + element.nombres + '</td> <td class="rstlvwlast">' + element.apellidos + '</td></tr>');
+                        }
+                    } else {
+                        $('#resultsTableBody').append('<tr><td colspan="3"><b>sin coincidencias.</b><td></tr>');
                     }
-                } else {
-                    $('#resultsTableBody').append('<tr><td colspan="3"><b>sin coincidencias.</b><td></tr>');
+                } catch (error) {
+                    console.log(error);
                 }
-            } catch (error) {
-                console.log(error);
-            }
-        });
-        $('#searchResultsView').show();
-    } else {
-        $('#searchResultsView').hide();
+            });
+            $('#searchResultsView').show();
+        } else {
+            $('#searchResultsView').hide();
+        }
     }
+
 });
 
 /**

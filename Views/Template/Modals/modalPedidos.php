@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formPaciente" name="formPaciente" class="form-horizontal">
+                <form id="formPaciente" name="formPaciente" class="form-horizontal" autocomplete="off">
                     <input type="hidden" id="idUsuario" name="idUsuario" value="">
                     <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                     <div class="form-row">
