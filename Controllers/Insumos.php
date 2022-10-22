@@ -3,9 +3,8 @@
 	class Insumos extends Controllers{
 		public function __construct()
 		{
+			sessionStart();
 			parent::__construct();
-            session_start();
-            session_regenerate_id(true);
             if(empty($_SESSION['login']))
 			{
 				header('Location: '.base_url().'/login');
@@ -256,6 +255,20 @@
 					}
 				}
 				echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+			}
+			die();
+		}
+
+		public function serachInsumoByName($str_search){
+			if($_SESSION['permisosMod']['r'] &&  strlen($str_search) > 0){
+				$str_search = strClean($str_search);
+				$arrData = $this->model->searchInsumos($str_search);
+				if (empty($arrData)) {
+					$arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+				} else {
+					$arrResponse = array('status' => true, 'data' => $arrData);
+				}
+				echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
 			}
 			die();
 		}

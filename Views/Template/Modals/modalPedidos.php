@@ -26,16 +26,6 @@
                                         <th>Apellidos</th>
                                     </thead>
                                     <tbody id="resultsTableBody">
-                                        <tr>
-                                            <td>Alfreds Futterkiste</td>
-                                            <td>Maria Anders</td>
-                                            <td>Germany</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Centro comercial Moctezuma</td>
-                                            <td>Francisco Chang</td>
-                                            <td>Mexico</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                                 <style>
@@ -51,8 +41,8 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-8">
-                            <label for="txtIdentificacion">Servicio<span class="required">*</span></label>
+                        <div class="form-group col-md-4">
+                            <label for="selectServicio">Servicio<span class="required">*</span></label>
                             <select id="selectServicio" name="selectServicio" class="form-control form-select" aria-label="Selecciona un servicio">
                                 <option selected>Selecciona un servicio</option>
                                 <option value="1">One</option>
@@ -60,53 +50,54 @@
                                 <option value="3">Three</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="txtIdentificacion">Identificación (DPI) <span class="required">*</span></label>
-                            <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" required="">
+                            <label for="datePicker">Fecha<span class="required">*</span></label>
+                            <input type="date" name="datePicker" id="datePicker" class="form-control" id="txtPersona" required="" disabled>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="txtNombre">Nombres <span class="required">*</span></label>
-                            <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="txtApellido">Apellidos <span class="required">*</span></label>
-                            <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="txtEdad">Edad <span class="required">*</span></label>
-                            <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="txtTelefono">Teléfono <span class="required">*</span></label>
-                            <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label for="txtDireccion">Dirección <span class="required">*</span></label>
-                        <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" required="">
                     </div>
                     <hr>
-                    <p class="text-primary">Datos Del Responsable.</p>
+                    <!-- Tabla de insumos, permite agregar, modificar cantidades, etc -->
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Nombre del Responsable <span class="required">*</span></label>
-                            <input class="form-control valid validText" type="text" id="txtResponsable" name="txtResponsable" required="">
+                        <div class="form-group col-md-12">
+                            <label for="txtSrchInsumo">Agregar insumo<span class="required">*</span></label>
+                            <input type="text" class="form-control txtSrchInsumo" id="txtSrchInsumo" placeholder="Busar insumo" name="txtSrchInsumo" required="">
+                            <div id="searchResultsViewMed" class="form-control" style="height: auto; position: absolute; z-index: 99; border-color: black; display: none;">
+                                <table id="resultsTableMed" style="width: 100%;">
+                                    <thead>
+                                        <th>Codigo</th>
+                                        <th>Categoria</th>
+                                        <th>Nombre del insumo</th>
+                                    </thead>
+                                    <tbody id="resultsTableBodyMed">
+                                    </tbody>
+                                </table>
+                                <style>
+                                    .resultViewelementMed:hover {
+                                        background-color: lightgray;
+                                        cursor: pointer;
+                                    }
+                                </style>
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Telefono Responsable <span class="required">*</span></label>
-                            <input class="form-control valid validNumber" type="text" id="txtTelefonoResp" name="txtTelefonoResp" required="" onkeypress="return controlTag(event);">
-                        </div>
-
                     </div>
-                    <div class="form-row">
-
+                    <div style="height: 238px; overflow-y: scroll; background: lightgrey;">
+                        <table class="table table-sm" style="background: white;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 75px;"># codigo</th>
+                                    <th scope="col">Categoria</th>
+                                    <th scope="col">Insumo</th>
+                                    <th scope="col" style="width: 100px;">Cantidad</th>
+                                    <th scope="col" style="width: 100px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="pedidoContent">
+                            </tbody>
+                        </table>
                     </div>
+
                     <div class="tile-footer">
-                        <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>&nbsp;&nbsp;&nbsp;
+                        <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>
                         <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
                     </div>
                 </form>

@@ -135,8 +135,20 @@
 	        return $request_delete;
 		}
 
-
-
+		/**
+		 * Busca insumos en base al nombre que se brinda
+		 */
+		public function searchInsumos($serach_value) //listar en datatable
+		{
+			$this->serach_value = $serach_value;
+			$sql = "SELECT i.idinsumos, c.nombrecat ,i.nombre  
+					FROM insumos i 
+					INNER JOIN categoria c
+					ON i.categoriaid = c.idcategoria
+					WHERE i.status != 0  AND i.nombre LIKE '%$this->serach_value%' LIMIT 10";
+					$request = $this->select_all($sql);
+					return $request;
+		}
 	
 	}
  ?>
