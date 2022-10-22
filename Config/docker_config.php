@@ -1,6 +1,6 @@
 <?php 
 
-	const BASE_URL = "http://localhost";
+	const BASE_URL = "http://mysql/sistemahro";
 	//const BASE_URL = "https://pacientehro.qualitysmd.com/";
 
 	//zona horaria

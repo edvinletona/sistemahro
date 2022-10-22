@@ -89,8 +89,7 @@
 				$request = 'exist';
 			}
 			return $request;
-		}	
-
+		}
 
 	}
  ?>

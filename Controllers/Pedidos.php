@@ -3,8 +3,8 @@
     class Pedidos extends Controllers{
         public function __construct()
         {
-            parent::__construct();
-            session_start();
+            sessionStart();
+			parent::__construct();
             session_regenerate_id(true);
             if(empty($_SESSION['login']))
             {

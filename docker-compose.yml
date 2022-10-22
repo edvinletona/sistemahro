@@ -1,0 +1,38 @@
+# archvio de configuracion para el ambiente de desarrollo del proeycto
+# Crear el volumen antes de ejecutar este archivo
+# ------- docker exec -it sistemahro-mysql /bin/bash
+# Y dentro de este ejecutamos (el archivo ya fue copiado previamiente)
+#  mysql -u docker_user --password=1234 pacientes < pacientes_init.sql
+# Para ingresar, se puede hacer por medio del enlace
+# http://localhost/Login/login
+version: '3'
+services:
+  mysql:
+    build:
+      context: ./docker/mysql
+    container_name: sistemahro-mysql
+    environment:
+      MYSQL_DATABASE: pacientes
+      MYSQL_USER: docker_user
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - "sistemahro-mysql-volumen:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+    restart: always
+  php:
+    build:
+      context: ./docker/php
+      args:
+        php_version: 7.4-apache
+    container_name: sistemahro-php
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    links:
+      - mysql
+volumes:
+  sistemahro-mysql-volumen:
+            

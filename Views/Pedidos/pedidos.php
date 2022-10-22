@@ -1,6 +1,6 @@
 <?php 
     headerAdmin($data); 
-    //getModal('modalInsumos',$data);
+    getModal('modalPedidos',$data);
 ?>
   <main class="app-content">    
       <div class="app-title">
