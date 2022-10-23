@@ -14,13 +14,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formPaciente" name="formPaciente" class="form-horizontal" autocomplete="off">
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="">
+                <form id="formPaciente" action="javascript:void(0);"  name="formPaciente" class="form-horizontal" autocomplete="off">
                     <p class="text-primary" style="margin-bottom: 4px;">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                     <div class="form-row form-row-compact">
                         <div class="form-group col-md-8">
-                            <label for="txtIdentificacion">Paciente<span class="required">*</span></label>
-                            <input type="text" class="form-control txtPersona" id="txtPersona" placeholder="nombre, apellido o DPI" name="txtIdentificacion" required="">
+                            <label for="txtPersona">Paciente<span class="required">*</span></label>
+                            <input type="text" class="form-control txtPersona" id="txtPersona" placeholder="nombre, apellido o DPI" name="txtPersona" >
                             <input type="hidden" id="selectedPerson" value="0" name="selectedPerson">
                             <!-- Visor de resutlados de busqueda en tiempo real. -->
                             <div id="searchResultsView" class="form-control" style="height: auto; position: absolute; z-index: 99; border-color: black; display: none;">
@@ -50,14 +49,17 @@
                             <label for="selectServicio">Servicio<span class="required">*</span></label>
                             <select id="selectServicio" name="selectServicio" class="form-control form-select" aria-label="Selecciona un servicio">
                                 <option selected>Selecciona un servicio</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="selectEstado">Estado<span class="required">*</span></label>
+                            <select id="selectEstado" name="selectEstado" class="form-control form-select" aria-label="Selecciona un estado" disabled>
+                                <option value="1" selected>Operado</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="datePicker">Fecha<span class="required">*</span></label>
-                            <input type="date" name="datePicker" id="datePicker" class="form-control" id="txtPersona" required="" disabled>
+                            <input type="date" name="datePicker" id="datePicker" class="form-control" id="txtPersona"  disabled>
                         </div>
                     </div>
                     <hr>
@@ -65,7 +67,7 @@
                     <div class="form-row form-row-compact">
                         <div class="form-group col-md-12">
                             <label for="txtSrchInsumo">Agregar insumo<span class="required">*</span></label>
-                            <input type="text" class="form-control txtSrchInsumo" id="txtSrchInsumo" placeholder="Busar insumo" name="txtSrchInsumo" required="">
+                            <input type="text" class="form-control txtSrchInsumo" id="txtSrchInsumo" placeholder="Busar insumo" name="txtSrchInsumo" >
                             <div id="searchResultsViewMed" class="form-control" style="height: auto; position: absolute; z-index: 99; border-color: black; display: none;">
                                 <table id="resultsTableMed" style="width: 100%;">
                                     <thead>
@@ -100,9 +102,9 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <br>
                     <div class="tile-footer">
-                        <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>
+                        <button id="btnSavePedido" class="btn btn-primary" ><i class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>
                         <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
                     </div>
                 </form>

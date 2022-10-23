@@ -3,16 +3,13 @@ function openModal() {
     clearSelectedPerson();
     clearInsumosinput();
     clearPedidosTable();
-    rowTable = "";
-    document.querySelector('#idUsuario').value = "";
-    document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
-    document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
-    document.querySelector('#btnText').innerHTML = "Guardar";
-    document.querySelector("#formPaciente").reset();
-    $('#modalFormPaciente').modal('show');
+    $('#selectServicio').prop('selectedIndex',0);
     //fecha de hoy.
     document.getElementById('datePicker').valueAsDate = new Date();
     document.getElementById('datePicker').min = new Date().toISOString().split("T")[0];
+    rowTable = "";
+    $('#modalFormPaciente').modal('show');
+    
 }
 
 console.log("consultando los servicios");
@@ -164,7 +161,7 @@ $(document).on('click', '.resultViewelementMed', function () {
     let insumo_nom = this.querySelector('.rstlvwname').innerHTML;
     $('#pedidoContent').append(
         '<tr>' +
-        '    <th class="insRowId" scope="row">'+insumo_id+'</th>' +
+        '    <th class="insRowId" insumo-id="'+insumo_id+'" scope="row">'+insumo_id+'</th>' +
         '    <td >'+insumo_cat+'</td>' +
         '    <td>'+insumo_nom+'</td>' +
         '    <td class="insRowCant">' +
@@ -181,3 +178,48 @@ $(document).on('click', '.resultViewelementMed', function () {
 function clearPedidosTable(){
     $('#pedidoContent').empty();
 }
+
+/**
+ * Crea el pedido en base de datos
+ */
+$('#btnSavePedido').on('click',function(){
+    let pedido_persona = $('#selectedPerson').val();
+    if(pedido_persona == '0'){
+        $('#txtPersona').prop('required',true);
+        document.getElementById('txtPersona').setCustomValidity('Ingresar paciente.');
+        $('#txtPersona').checkValidity();
+        $('#txtPersona').prop('required',false);
+        return;
+    }
+    let pedido_servicio = $('#selectServicio').val();
+    if(pedido_servicio == 'Selecciona un servicio'){
+        $('#selectServicio').prop('required',true);
+        document.getElementById('selectServicio').setCustomValidity('Selecione un servicio.');
+        $('#selectServicio').checkValidity();
+        $('#selectServicio').prop('required',false);
+        return;
+    }
+    let pedido = {};
+    pedido.status = 1; //Operado por default
+    pedido.personaid= pedido_persona;
+    pedido.servicioid = pedido_servicio;
+    //Ahora sacamos el listado de insumos.
+    let pedido_insumos = [];
+    let tabla_pedido = document.getElementById('pedidoContent');
+    let filas = tabla_pedido.querySelectorAll('tr');
+    if(filas.length == 0){
+        //TODO indicar que agregue insumos (de forma bonita)
+        alert("Debe de ingresar un insumo para continuar");
+        return;
+    }
+    for (const row_element of filas) {
+        let new_insumo = {
+            idinsumo: row_element.querySelector('.insRowId').getAttribute('insumo-id'),
+            cantidad: row_element.querySelector('.insRowCant input').value
+        }
+        pedido_insumos.push(new_insumo);
+    }
+    pedido.insumos = pedido_insumos;
+    console.log(pedido);
+    
+});
