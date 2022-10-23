@@ -8,6 +8,19 @@ class PedidosModel extends Mysql
 	}
 
 	/**
+	 * Obtiene los datos generales de un pedido a modo de listado.
+	 * Aca se pueda agregar algun filtro de estado o fecha y un limite para paginear.
+	 */
+	public function getPedidoList()
+	{
+		$sql = "SELECT ped.idpedido as idpedido, DATE_FORMAT(ped.fecha,'%d/%m/%Y') as fecha, per.nombres as nombres, per.apellidos as apellidos, ser.nombreservicio as nombreservicio
+			FROM  pedido AS ped , persona as per , servicio as ser 
+			WHERE ped.personaid = per.idpersona AND ped.servicioid = ser.idservicio";
+		$request = $this->select_all($sql);
+		return $request;
+	}
+
+	/**
 	 * Crea un pedido, actualmente en estado de procesado y fecha de sistema.
 	 */
 	public function insertPedido(int $personid, int $servicioid, $insumos)
@@ -33,7 +46,7 @@ class PedidosModel extends Mysql
 			$request = $this->select($sql);
 			if (empty($request)) {
 				throw new Error("Invalid insumo id");
-			} else if ($insumo->cantidad < 1){
+			} else if ($insumo->cantidad < 1) {
 				throw new Error("Invalid insumo cantidad, must be greather than 0");
 			}
 		}
@@ -43,7 +56,7 @@ class PedidosModel extends Mysql
 		$pedidoid = $this->insert($query_insert, $arrData);
 		foreach ($insumos as $insumo) {
 			$query_insert  = "INSERT INTO detalle_pedido(pedidoid,insumoid,cantidad) VALUES(?,?,?)";
-			$arrData = array($pedidoid,$insumo->idinsumo, $insumo->cantidad);
+			$arrData = array($pedidoid, $insumo->idinsumo, $insumo->cantidad);
 			$this->insert($query_insert, $arrData);
 		}
 		return $pedidoid;

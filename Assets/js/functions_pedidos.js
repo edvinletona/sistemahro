@@ -224,13 +224,53 @@ $('#btnSavePedido').on('click', function () {
         try {
             data = JSON.parse(data);
             console.log(data);
-            if(data.status){
+            if (data.status) {
+                getPedidosList();
                 $('#modalFormPaciente').modal('toggle');
             } else {
                 //TODO controlar error de que no se inserto
             }
         } catch (error) {
-            console.log(error,data);
+            console.log(error, data);
         }
     });
 });
+
+/**
+ * Obtener los pedidios para mostrar en pantalla.
+ */
+function getPedidosList() {
+    $('#tableListPedidos').empty();
+    $.get(base_url + "/Pedidos/getPedidosList", function (data) {
+        try {
+            console.log(data);
+            let results = JSON.parse(data);
+            if (results.data && results.data.length > 0) {
+                console.log("Recorriendo array")
+                for (const element of results.data) {
+                    $('#tableListPedidos').append(
+                        '<tr id="pedElm-'+element.idpedido+'" pedido="'+element.idpedido+'">' +
+                            '<td>'+element.idpedido+'</td>' +
+                            '<td>'+element.nombres+'</td>' +
+                            '<td>'+element.apellidos+'</td>' +
+                            '<td>'+element.nombreservicio+'</td>' +
+                            '<td>'+element.fecha+'</td>' +
+                            '<td>' +
+                                '<button class="btn btn-sm btn-primary btnViewPedido" type="button"><i class="fa fa-fw fa-lg fa-eye"></i>Ver</button>' +
+                            '</td>' +
+                        '</tr>'
+                    );
+
+                    console.log("Agregando ", element);
+                    $('#selectServicio').append('<option value="' + element.idservicio + '">' + element.nombreservicio + '</option>');
+                }
+            } else {
+                $('#tableListPedidos').append('<tr><td colspan="6"><b>Sin pedidos.</b><td></tr>');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    });
+}
+
+getPedidosList();

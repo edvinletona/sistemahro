@@ -29,18 +29,31 @@ class Pedidos extends Controllers
     {
         error_reporting(0);
         if ($_POST) {
-            if (empty($_POST['personaid']) || empty($_POST['servicioid']) || empty($_POST['insumos']) ) {
-				$arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
-			} else {
+            if (empty($_POST['personaid']) || empty($_POST['servicioid']) || empty($_POST['insumos'])) {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            } else {
                 $personaid = intval($_POST['personaid']);
                 $servicioid = intval($_POST['servicioid']);
                 $insumos = json_decode($_POST['insumos']);
-                $request = $this->model->insertPedido($personaid,$servicioid,$insumos);
-                if($request > 0){
+                $request = $this->model->insertPedido($personaid, $servicioid, $insumos);
+                if ($request > 0) {
                     $arrResponse = array("status" => true, "msg" => $request);
                 }
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
     }
+
+    public function getPedidosList()
+    {
+        $arrData = $this->model->getPedidoList();
+        if (empty($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+        } else {
+            $arrResponse = array('status' => true, 'data' => $arrData);
+        }
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+    }
+
+    
 }
