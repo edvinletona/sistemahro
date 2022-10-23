@@ -249,15 +249,15 @@ function getPedidosList() {
                 console.log("Recorriendo array")
                 for (const element of results.data) {
                     $('#tableListPedidos').append(
-                        '<tr id="pedElm-'+element.idpedido+'" pedido="'+element.idpedido+'">' +
-                            '<td>'+element.idpedido+'</td>' +
-                            '<td>'+element.nombres+'</td>' +
-                            '<td>'+element.apellidos+'</td>' +
-                            '<td>'+element.nombreservicio+'</td>' +
-                            '<td>'+element.fecha+'</td>' +
-                            '<td>' +
-                                '<button class="btn btn-sm btn-primary btnViewPedido" type="button"><i class="fa fa-fw fa-lg fa-eye"></i>Ver</button>' +
-                            '</td>' +
+                        '<tr id="pedElm-' + element.idpedido + '" >' +
+                        '<td>' + element.idpedido + '</td>' +
+                        '<td>' + element.nombres + '</td>' +
+                        '<td>' + element.apellidos + '</td>' +
+                        '<td>' + element.nombreservicio + '</td>' +
+                        '<td>' + element.fecha + '</td>' +
+                        '<td>' +
+                        '<button pedido="' + element.idpedido + '" class="btn btn-sm btn-primary btnViewPedido" type="button"><i class="fa fa-fw fa-lg fa-eye"></i>Ver</button>' +
+                        '</td>' +
                         '</tr>'
                     );
 
@@ -274,3 +274,52 @@ function getPedidosList() {
 }
 
 getPedidosList();
+
+/**
+ * Ver un pedido
+ */
+$(document).on('click', '.btnViewPedido', function () {
+    $('#tblPedidoPersonaviews').empty();
+    $('#tblPedidoviews').empty();
+    $('#pedidoViewId').empty();
+    $('#pedidoViewServ').empty();
+    $('#pedidoViewFech').empty();
+    $.get(base_url + "/Pedidos/getPedido/" + this.getAttribute('pedido'), function (data) {
+        try {
+
+            let results = JSON.parse(data);
+            if (results.data) {
+                results = results.data;
+                console.log(results);
+                //datos del pedido
+                $('#pedidoViewId').text(results.pedido.idpedido);
+                $('#pedidoViewServ').text(results.pedido.nombreservicio);
+                $('#pedidoViewFech').text(results.pedido.fecha);
+                //Agregamos datos de la persona
+                $('#tblPedidoPersonaviews').append(
+                    '<tr >' +
+                    '<td>' + results.pedido.identificacion + '</td>' +
+                    '<td>' + results.pedido.nombres + '</td>' +
+                    '<td>' + results.pedido.apellidos + '</td>' +
+                    '</tr>'
+                );
+                //Detalle del pedido
+                for (const element of results.detalle) {
+                    $('#tblPedidoviews').append(
+                        '<tr>' +
+                        '<td>' + element.idinsumos + '</td>' +
+                        '<td>' + element.nombrecat + '</td>' +
+                        '<td>' + element.nombre + '</td>' +
+                        '<td>' + element.cantidad + '</td>' +
+                        '</tr>'
+                    );
+                }
+            } else {
+                $('#tableListPedidos').append('<tr><td colspan="6"><b>Sin pedidos.</b><td></tr>');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    });
+    $('#modalViewPedido').modal('toggle');
+});

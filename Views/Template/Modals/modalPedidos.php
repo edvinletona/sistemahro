@@ -14,12 +14,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formPaciente" action="javascript:void(0);"  name="formPaciente" class="form-horizontal" autocomplete="off">
+                <form id="formPaciente" action="javascript:void(0);" name="formPaciente" class="form-horizontal" autocomplete="off">
                     <p class="text-primary" style="margin-bottom: 4px;">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                     <div class="form-row form-row-compact">
                         <div class="form-group col-md-8">
                             <label for="txtPersona">Paciente<span class="required">*</span></label>
-                            <input type="text" class="form-control txtPersona" id="txtPersona" placeholder="nombre, apellido o DPI" name="txtPersona" >
+                            <input type="text" class="form-control txtPersona" id="txtPersona" placeholder="nombre, apellido o DPI" name="txtPersona">
                             <input type="hidden" id="selectedPerson" value="0" name="selectedPerson">
                             <!-- Visor de resutlados de busqueda en tiempo real. -->
                             <div id="searchResultsView" class="form-control" style="height: auto; position: absolute; z-index: 99; border-color: black; display: none;">
@@ -51,7 +51,7 @@
                                 <option selected>Selecciona un servicio</option>
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4" style="display: none;">
                             <label for="selectEstado">Estado<span class="required">*</span></label>
                             <select id="selectEstado" name="selectEstado" class="form-control form-select" aria-label="Selecciona un estado" disabled>
                                 <option value="1" selected>Operado</option>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="datePicker">Fecha<span class="required">*</span></label>
-                            <input type="date" name="datePicker" id="datePicker" class="form-control" id="txtPersona"  disabled>
+                            <input type="date" name="datePicker" id="datePicker" class="form-control" id="txtPersona" disabled>
                         </div>
                     </div>
                     <hr>
@@ -67,7 +67,7 @@
                     <div class="form-row form-row-compact">
                         <div class="form-group col-md-12">
                             <label for="txtSrchInsumo">Agregar insumo<span class="required">*</span></label>
-                            <input type="text" class="form-control txtSrchInsumo" id="txtSrchInsumo" placeholder="Busar insumo" name="txtSrchInsumo" >
+                            <input type="text" class="form-control txtSrchInsumo" id="txtSrchInsumo" placeholder="Busar insumo" name="txtSrchInsumo">
                             <div id="searchResultsViewMed" class="form-control" style="height: auto; position: absolute; z-index: 99; border-color: black; display: none;">
                                 <table id="resultsTableMed" style="width: 100%;">
                                     <thead>
@@ -104,7 +104,7 @@
                     </div>
                     <br>
                     <div class="tile-footer">
-                        <button id="btnSavePedido" class="btn btn-primary" ><i class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>
+                        <button id="btnSavePedido" class="btn btn-primary"><i class="fa fa-fw fa-lg fa-check-circle"></i><span>Guardar</span></button>
                         <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
                     </div>
                 </form>
@@ -113,45 +113,64 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalViewPaciente" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<!-- Modal ver pedidio -->
+<div class="modal fade" id="modalViewPedido" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos del paciente</h5>
+                <h5 class="modal-title" id="titleModal">Datos del pedido</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <label><b># de pedido: </b>
+                            <div id="pedidoViewId"></div>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <label><b>Servicio: </b>
+                            <div id="pedidoViewServ"></div>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <label><b>Fecha: </b>
+                            <div id="pedidoViewFech"></div>
+                        </label>
+                    </div>
+                </div>
+                <hr>
+                <label> <b>Datos del paciente</b></label>
                 <table class="table table-bordered">
-                    <tbody>
+                    <thead>
                         <tr>
-                            <td>Identificación (DPI):</td>
-                            <td id="celIdentificacion">654654654</td>
+                            <th scope="col" style="width: 75px;">Identificación</th>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
                         </tr>
-                        <tr>
-                            <td>Nombres:</td>
-                            <td id="celNombre">Jacob</td>
-                        </tr>
-                        <tr>
-                            <td>Apellidos:</td>
-                            <td id="celApellido">Jacob</td>
-                        </tr>
-                        <tr>
-                            <td>Edad:</td>
-                            <td id="celEdad">Larry</td>
-                        </tr>
-                        <tr>
-                            <td>Teléfono:</td>
-                            <td id="celTelefono">Larry</td>
-                        </tr>
-                        <tr>
-                            <td>Fecha registro:</td>
-                            <td id="celFechaRegistro">Larry</td>
-                        </tr>
+                    </thead>
+                    <tbody id="tblPedidoPersonaviews">
+
                     </tbody>
                 </table>
+                <hr>
+                <div style="height: 238px; overflow-y: scroll; background: lightgrey;">
+                    <table class="table table-bordered" style="background: white;">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 90px;"># codigo</th>
+                                <th scope="col">Categoria</th>
+                                <th scope="col">Insumo</th>
+                                <th scope="col" style="width: 100px;">Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblPedidoviews">
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

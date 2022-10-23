@@ -55,5 +55,15 @@ class Pedidos extends Controllers
         echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
     }
 
-    
+    public function getPedido($pedidoid){
+        $arrData = $this->model->getPedido($pedidoid);
+        if (empty($arrData)) {
+            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+        } else {
+            $arrResponse = array('status' => true, 'data' => $arrData);
+        }
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+    }
+
+
 }

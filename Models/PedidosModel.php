@@ -61,4 +61,19 @@ class PedidosModel extends Mysql
 		}
 		return $pedidoid;
 	}
+
+	public function getPedido($pedidoid){
+		$sql = "SELECT ped.idpedido as idpedido, DATE_FORMAT(ped.fecha,'%d/%m/%Y') as fecha, per.identificacion as identificacion, per.nombres as nombres, per.apellidos as apellidos, ser.nombreservicio as nombreservicio
+			FROM  pedido AS ped , persona as per , servicio as ser 
+			WHERE ped.idpedido = $pedidoid  AND ped.personaid = per.idpersona AND ped.servicioid = ser.idservicio ";
+		$request = $this->select($sql);
+		$response = new stdClass;
+		$response->pedido = $request;
+		$sql = "SELECT ins.idinsumos , ins.nombre , dp.cantidad, cat.nombrecat  
+			FROM  detalle_pedido as dp , insumos as ins, categoria as cat  
+			WHERE dp.pedidoid = $pedidoid AND dp.insumoid = ins.idinsumos AND ins.categoriaid = cat.idcategoria ";
+		$request2 = $this->select_all($sql);
+		$response->detalle = $request2;
+		return $response;
+	}
 }
